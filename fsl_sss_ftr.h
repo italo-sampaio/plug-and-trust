@@ -104,13 +104,13 @@
  */
 
 /** SE050 */
-#define SSS_HAVE_SE05X_VER_03_XX 0
+#define SSS_HAVE_SE05X_VER_03_XX 1
 
 /** SE051 */
 #define SSS_HAVE_SE05X_VER_06_00 0
 
 /** SE051 */
-#define SSS_HAVE_SE05X_VER_07_02 1
+#define SSS_HAVE_SE05X_VER_07_02 0
 
 #if (( 0                             \
     + SSS_HAVE_SE05X_VER_03_XX       \
