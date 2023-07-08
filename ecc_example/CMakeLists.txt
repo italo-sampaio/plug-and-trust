@@ -1,5 +1,8 @@
 CMAKE_MINIMUM_REQUIRED(VERSION 3.5.0)
 
+# Add usb-armory toolchain
+set(CMAKE_TOOLCHAIN_FILE ./arm-linux-gnueabihf.cmake)
+
 project (ex_ecc)
 
 FILE(
