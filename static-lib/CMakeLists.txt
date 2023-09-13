@@ -1,6 +1,6 @@
 CMAKE_MINIMUM_REQUIRED(VERSION 3.5.0)
 
-project (ex_ecc)
+project (plugntrust)
 
 FILE(
     GLOB
@@ -34,27 +34,21 @@ FILE(
     ../hostlib/hostLib/platform/linux/i2c_a7.c
 
     ##### Openssl Host crypto support
-    #../sss/src/openssl/fsl_sss_openssl_apis.c
-    #../sss/src/keystore/keystore_cmn.c
-    #../sss/src/keystore/keystore_openssl.c
-    #../sss/src/keystore/keystore_pc.c
-
-    ##### Mbedtls Host crypto support
-    #../sss/src/mbedtls/fsl_sss_mbedtls_apis.c
-    #../sss/src/keystore/keystore_cmn.c
-    #../sss/src/keystore/keystore_pc.c
+    ../sss/src/openssl/fsl_sss_openssl_apis.c
+    ../sss/src/keystore/keystore_cmn.c
+    ../sss/src/keystore/keystore_openssl.c
+    ../sss/src/keystore/keystore_pc.c
 
     ##### Authenticated session to se05x
-    #../sss/ex/src/ex_sss_scp03_auth.c
-    #../sss/src/se05x/fsl_sss_se05x_eckey.c
-    #../sss/src/se05x/fsl_sss_se05x_scp03.c
-    #../hostlib/hostLib/libCommon/nxScp/nxScp03_Com.c
+    ../sss/ex/src/ex_sss_scp03_auth.c
+    ../sss/src/se05x/fsl_sss_se05x_eckey.c
+    ../sss/src/se05x/fsl_sss_se05x_scp03.c
+    ../hostlib/hostLib/libCommon/nxScp/nxScp03_Com.c
 )
 
-add_executable(${PROJECT_NAME} ../sss/ex/ecc/ex_sss_ecc.c ${SOURCES})
+add_library(${PROJECT_NAME} STATIC ${SOURCES})
 
-#TARGET_LINK_LIBRARIES(${PROJECT_NAME} ssl crypto)
-
+TARGET_LINK_LIBRARIES(${PROJECT_NAME} ${OPENSSL_ROOT_DIR}/lib/libcrypto.a ${OPENSSL_ROOT_DIR}/lib/libssl.a)
 
 FILE(
     GLOB
@@ -71,6 +65,7 @@ FILE(
     ../hostlib/hostLib/se05x_03_xx_xx
     ../hostlib/hostLib/platform/inc
     ../hostlib/hostLib/libCommon/smCom
+    ${OPENSSL_ROOT_DIR}/include
 )
 
 TARGET_INCLUDE_DIRECTORIES(
@@ -78,8 +73,7 @@ TARGET_INCLUDE_DIRECTORIES(
     PUBLIC
     ../
     ${INC_DIR}
-    )
-
+)
 
 ADD_DEFINITIONS(-DSSS_USE_FTR_FILE)
 ADD_DEFINITIONS(-DSMCOM_T1oI2C)
